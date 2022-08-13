@@ -1,0 +1,37 @@
+@font-face 
+    font-family: 'v1'
+    src: url('./static/Notably Absent DEMO.ttf') format('truetype')
+
+
+#navbar
+    #buttons-div
+        display: flex
+        justify-content: space-evenly
+
+        button
+            cursor: pointer
+            font-size: 35px
+            background: none
+            border: none
+            font-family: 'v1'
+            // position: relative
+            text-align: center
+            padding: 0
+            // height: 40px
+
+            &::after
+                content: ''
+                display: block
+                height: 3px
+                width: 0
+                // mask-origin: 50%
+                background-color: black
+                // position: absolute
+                margin: auto
+
+            &:hover::after
+                transition-property: width
+                transition-duration: .3s
+                width: 100%
+
+

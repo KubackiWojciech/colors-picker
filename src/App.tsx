@@ -3,10 +3,11 @@ import $ from 'jquery';
 
 import Gradient from './components/gradientSample/Gradient';
 
-import './app.sass';
 import SeparateColors from './components/separateColorsSample/SeparateColors';
 import IconSample from './components/iconSample/IconSample';
 import TextSample from './components/textSample/TextSample';
+import './app.sass';
+import './tempnavbar.sass'
 
 export default function App() {
     const [mode, setMode] = useState('icon');
@@ -33,11 +34,12 @@ export default function App() {
     return (
         <>
             <div id="navbar">
-
-                <button onClick={() => setMode('gradient')} >Gradient</button>
-                <button onClick={() => setMode('separate-colors')} >Separate colors</button>
-                <button onClick={() => setMode('icon')} >Icon</button>
-                <button onClick={() => setMode('text')} >Text</button>
+                <div id="buttons-div">
+                    <button onClick={() => setMode('gradient')} >Gradient</button>
+                    <button onClick={() => setMode('separate-colors')} >Separate colors</button>
+                    <button onClick={() => setMode('icon')} >Icons</button>
+                    <button onClick={() => setMode('text')} >Text</button>
+                </div>
                 <div className="both-colors-container">
                     <div className="one-color-container" style={{ backgroundColor: color1 }}></div>
                     <div className="one-color-container" style={{ backgroundColor: color2 }}></div>
