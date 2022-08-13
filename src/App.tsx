@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import $ from 'jquery';
 
 import Gradient from './components/gradientSample/Gradient';
@@ -13,6 +13,23 @@ export default function App() {
     const [color1, setColor1] = useState(randomColorGenerator());
     const [color2, setColor2] = useState(randomColorGenerator());
 
+    useEffect(() => {
+        const handleClick = (e: KeyboardEvent) => {
+            if (e.key == ' ') {
+                    setColor1(randomColorGenerator());
+                    setColor2(randomColorGenerator());
+            
+                    console.log('space event')
+                } 
+        };
+        
+        document.addEventListener('keypress', handleClick);
+    
+        return () => {
+          document.removeEventListener('keypress', handleClick);
+        };
+      }, []);
+
     return (
         <>
             <button onClick={() => setMode('gradient')} >Gradient</button>
@@ -20,10 +37,10 @@ export default function App() {
             <button onClick={() => setMode('icon')} >Icon</button>
             <button onClick={() => setMode('text')} >Text</button>
 
-           {mode == 'gradient' ? <Gradient color1={color1} color2={color2}/> : undefined}
-           {mode == 'separate-colors' ? <SeparateColors color1={color1} color2={color2}/> : undefined}
-           {mode == 'icon' ? <IconSample color1={color1} color2={color2}/> : undefined}
-           {mode == 'text' ? <TextSample color1={color1} color2={color2}/> : undefined}
+            {mode == 'gradient' ? <Gradient color1={color1} color2={color2} /> : undefined}
+            {mode == 'separate-colors' ? <SeparateColors color1={color1} color2={color2} /> : undefined}
+            {mode == 'icon' ? <IconSample color1={color1} color2={color2} /> : undefined}
+            {mode == 'text' ? <TextSample color1={color1} color2={color2} /> : undefined}
         </>
     )
 }

@@ -16,7 +16,6 @@ export default function IconSample(param: colorsParams) {
     }}
     >
       <FontAwesomeIcon icon={faFacebook}/>
-      <i className='fa-solid fa-user'></i>
       <FontAwesomeIcon icon={faDashcube}/>
       <FontAwesomeIcon icon={faBacteria}/>
       <FontAwesomeIcon icon={faChevronCircleRight}/>
