@@ -1,15 +1,29 @@
 import React, { useState } from 'react'
+import $ from 'jquery';
+
 import Gradient from './components/gradientSample/Gradient';
 
 import './app.sass';
+import SeparateColors from './components/separateColorsSample/SeparateColors';
+import IconSample from './components/iconSample/IconSample';
+import TextSample from './components/textSample/TextSample';
 
 export default function App() {
+    const [mode, setMode] = useState('icon');
+    const [color1, setColor1] = useState(randomColorGenerator());
+    const [color2, setColor2] = useState(randomColorGenerator());
+
     return (
         <>
-            <Gradient
-            color1={randomColorGenerator()}
-            color2={randomColorGenerator()}
-            />
+            <button onClick={() => setMode('gradient')} >Gradient</button>
+            <button onClick={() => setMode('separate-colors')} >Separate colors</button>
+            <button onClick={() => setMode('icon')} >Icon</button>
+            <button onClick={() => setMode('text')} >Text</button>
+
+           {mode == 'gradient' ? <Gradient color1={color1} color2={color2}/> : undefined}
+           {mode == 'separate-colors' ? <SeparateColors color1={color1} color2={color2}/> : undefined}
+           {mode == 'icon' ? <IconSample color1={color1} color2={color2}/> : undefined}
+           {mode == 'text' ? <TextSample color1={color1} color2={color2}/> : undefined}
         </>
     )
 }

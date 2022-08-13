@@ -2,13 +2,10 @@ import React from 'react';
 
 import './gradient.sass';
 
-interface params {
-  color1: string,
-  color2: string
-}
+import colorsParams from '../../colorsInputType';
 
 
-export default function Gradient(param: params) {
+export default function Gradient(param: colorsParams) {
   return (
     <div
       id="gradient-color"
