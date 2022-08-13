@@ -10,6 +10,6 @@ export default function TextSample(param: colorsParams) {
         backgroundColor: param.color1,
         color: param.color2
     }}
-    >Text sample</div>
+    >{'Text sample'}</div>
   )
 }

@@ -16,31 +16,42 @@ export default function App() {
     useEffect(() => {
         const handleClick = (e: KeyboardEvent) => {
             if (e.key == ' ') {
-                    setColor1(randomColorGenerator());
-                    setColor2(randomColorGenerator());
-            
-                    console.log('space event')
-                } 
+                setColor1(randomColorGenerator());
+                setColor2(randomColorGenerator());
+
+                console.log('space event')
+            }
         };
-        
+
         document.addEventListener('keypress', handleClick);
-    
+
         return () => {
-          document.removeEventListener('keypress', handleClick);
+            document.removeEventListener('keypress', handleClick);
         };
-      }, []);
+    }, []);
 
     return (
         <>
-            <button onClick={() => setMode('gradient')} >Gradient</button>
-            <button onClick={() => setMode('separate-colors')} >Separate colors</button>
-            <button onClick={() => setMode('icon')} >Icon</button>
-            <button onClick={() => setMode('text')} >Text</button>
+            <div id="navbar">
+
+                <button onClick={() => setMode('gradient')} >Gradient</button>
+                <button onClick={() => setMode('separate-colors')} >Separate colors</button>
+                <button onClick={() => setMode('icon')} >Icon</button>
+                <button onClick={() => setMode('text')} >Text</button>
+                <div className="both-colors-container">
+                    <div className="one-color-container" style={{ backgroundColor: color1 }}></div>
+                    <div className="one-color-container" style={{ backgroundColor: color2 }}></div>
+                </div>
+                <div className="both-colors-text-container">
+                    <h4>{color1 + ' ' + color2}</h4>
+                </div>
+            </div>
 
             {mode == 'gradient' ? <Gradient color1={color1} color2={color2} /> : undefined}
             {mode == 'separate-colors' ? <SeparateColors color1={color1} color2={color2} /> : undefined}
             {mode == 'icon' ? <IconSample color1={color1} color2={color2} /> : undefined}
             {mode == 'text' ? <TextSample color1={color1} color2={color2} /> : undefined}
+
         </>
     )
 }
