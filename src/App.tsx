@@ -1,26 +1,24 @@
 import React, { useEffect, useState } from 'react'
-import $ from 'jquery';
 
-import Gradient from './components/gradientSample/Gradient';
-
-import SeparateColors from './components/separateColorsSample/SeparateColors';
-import IconSample from './components/iconSample/IconSample';
-import TextSample from './components/textSample/TextSample';
 import './app.sass';
 import './tempnavbar.sass'
+import InfoBar from './infoBar/InfoBar';
+import Navbar from './navbar/Navbar';
+import ColorField from './colorField/ColorField';
+import axios from 'axios';
 
 export default function App() {
-    const [mode, setMode] = useState('icon');
+    const [mode, setMode] = useState('gradient');
     const [color1, setColor1] = useState(randomColorGenerator());
     const [color2, setColor2] = useState(randomColorGenerator());
+    const [contrastRequired, setContrastRequired] = useState(true)
 
     useEffect(() => {
         const handleClick = (e: KeyboardEvent) => {
             if (e.key == ' ') {
-                setColor1(randomColorGenerator());
-                setColor2(randomColorGenerator());
-
-                console.log('space event')
+                let colors = generateColors(contrastRequired);
+                setColor1(colors[0]);
+                setColor2(colors[1]);
             }
         };
 
@@ -31,34 +29,43 @@ export default function App() {
         };
     }, []);
 
+
+
     return (
         <>
-            <div id="navbar">
-                <div id="buttons-div">
-                    <button onClick={() => setMode('gradient')} >Gradient</button>
-                    <button onClick={() => setMode('separate-colors')} >Separate colors</button>
-                    <button onClick={() => setMode('icon')} >Icons</button>
-                    <button onClick={() => setMode('text')} >Text</button>
-                </div>
-                <div className="both-colors-container">
-                    <div className="one-color-container" style={{ backgroundColor: color1 }}></div>
-                    <div className="one-color-container" style={{ backgroundColor: color2 }}></div>
-                </div>
-                <div className="both-colors-text-container">
-                    <h4>{color1 + ' ' + color2}</h4>
-                </div>
-            </div>
-
-            {mode == 'gradient' ? <Gradient color1={color1} color2={color2} /> : undefined}
-            {mode == 'separate-colors' ? <SeparateColors color1={color1} color2={color2} /> : undefined}
-            {mode == 'icon' ? <IconSample color1={color1} color2={color2} /> : undefined}
-            {mode == 'text' ? <TextSample color1={color1} color2={color2} /> : undefined}
+            <Navbar setMode = {setMode} />
+            <InfoBar 
+            color1 = {color1}
+            color2 = {color2}
+            />
+            <ColorField 
+                mode={mode}
+                color1={color1}
+                color2={color2}
+            />
 
         </>
     )
 }
 
-function randomColorGenerator() {
+function generateColors(contrastRequired: boolean) {
+    if (!contrastRequired) {
+        console.log('without contrast checker')
+        return [randomColorGenerator(), randomColorGenerator()];
+    } else {
+        let color1 = randomColorGenerator();
+        let color2 = randomColorGenerator();
+
+        while(!checkContrast(color1, color2)) {
+            color1 = randomColorGenerator();
+            color2 = randomColorGenerator();
+        }
+
+        return [color1, color2];
+    }
+}
+
+export function randomColorGenerator() {
     const places = [0, 1, 2];
     const mainPlace = places.splice(Math.floor(Math.random() * 3));
     const value = Math.floor(Math.random() * 255).toString(16);
@@ -72,4 +79,15 @@ function randomColorGenerator() {
     rgb[place255[0]] = 'ff';
 
     return '#' + rgb[0] + rgb[1] + rgb[2];
+}
+
+async function checkContrast(color1: string, color2: string) {
+    let result;
+    await axios.get(generateCheckContrastLink(color1, color2)).then(x => result = x.data.AALarge);
+    console.log('checking contrast: ' + color1 + ' ' + color2);
+    return result == 'pass';
+}
+
+function generateCheckContrastLink(color1: string, color2: string) {
+    return 'https://webaim.org/resources/contrastchecker/?fcolor=' + color1.substring(1) + '&bcolor=' + color2.substring(1) + '&api';
 }

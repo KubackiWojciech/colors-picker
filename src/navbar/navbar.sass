@@ -1,0 +1,31 @@
+#nav-bar
+    display: flex
+    justify-content: space-evenly
+
+    button
+        cursor: pointer
+        font-size: 35px
+        background: none
+        border: none
+        font-family: 'v1'
+        // position: relative
+        text-align: center
+        padding: 0
+        // height: 40px
+
+        &::after
+            content: ''
+            display: block
+            height: 3px
+            width: 0
+            // mask-origin: 50%
+            background-color: black
+            // position: absolute
+            margin: auto
+            transition-duration: .3s
+            transition-property: width
+
+        &:hover::after
+            transition-property: width
+            transition-duration: .3s
+            width: 100%
