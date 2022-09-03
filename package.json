@@ -9,7 +9,7 @@
     "webpack": "webpack",
     "start": "webpack serve --open",
     "predeploy": "npm run webpack",
-    "deploy": "gh-pages -d webpack"
+    "deploy": "gh-pages -d dist"
   },
   "keywords": [],
   "author": "",
