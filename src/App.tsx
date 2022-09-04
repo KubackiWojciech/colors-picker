@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 
 import './app.sass';
 import './tempnavbar.sass'
@@ -6,6 +6,8 @@ import InfoBar from './infoBar/InfoBar';
 import Navbar from './navbar/Navbar';
 import ColorField from './colorField/ColorField';
 import axios from 'axios';
+
+import randomColorGenerator from './randomColorGenerator';
 
 export default function App() {
     const [mode, setMode] = useState('gradient');
@@ -63,22 +65,6 @@ function generateColors(contrastRequired: boolean) {
 
         return [color1, color2];
     }
-}
-
-export function randomColorGenerator() {
-    const places = [0, 1, 2];
-    const mainPlace = places.splice(Math.floor(Math.random() * 3));
-    const value = Math.floor(Math.random() * 255).toString(16);
-    const place0 = places.splice(Math.floor(Math.random() * 2));
-    const place255 = places.splice(0)
-
-    let rgb = ['00', '00', '00'];
-
-    rgb[mainPlace[0]] = value;
-    rgb[place0[0]] = '00';
-    rgb[place255[0]] = 'ff';
-
-    return '#' + rgb[0] + rgb[1] + rgb[2];
 }
 
 async function checkContrast(color1: string, color2: string) {
